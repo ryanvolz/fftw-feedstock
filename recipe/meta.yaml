@@ -9,7 +9,7 @@ source:
 
 build:
     skip: True  # [win]
-    number: 1
+    number: 2
 
 test:
     commands:
@@ -28,5 +28,6 @@ about:
 
 extra:
     recipe-maintainers:
+        - alexbw
         - jakirkham
         - jjhelmus
