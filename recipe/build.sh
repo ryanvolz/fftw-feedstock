@@ -35,7 +35,7 @@ TEST_CMD="eval cd tests && ${LIBRARY_SEARCH_VAR}=\"$PREFIX/lib\" make check-loca
 #
 
 # (1) Single precision (fftw libraries have "f" suffix)
-$CONFIGURE --enable-float --enable-sse
+$CONFIGURE --enable-float --enable-sse2 --enable-avx
 ${BUILD_CMD}
 ${INSTALL_CMD}
 ${TEST_CMD}
@@ -47,7 +47,7 @@ ${INSTALL_CMD}
 ${TEST_CMD}
 
 # (3) Double precision (fftw libraries have no precision suffix)
-$CONFIGURE --enable-sse2
+$CONFIGURE --enable-sse2 --enable-avx
 ${BUILD_CMD}
 ${INSTALL_CMD}
 ${TEST_CMD}
