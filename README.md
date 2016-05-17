@@ -5,7 +5,7 @@ Home: http://fftw.org
 
 Package license: GPL 2
 
-Feedstock license: BSD
+Feedstock license: BSD 3-Clause
 
 Summary: The fastest Fourier transform in the west.
 
@@ -69,9 +69,15 @@ Terminology
 
 Current build status
 ====================
+
 Linux: [![Circle CI](https://circleci.com/gh/conda-forge/fftw-feedstock.svg?style=svg)](https://circleci.com/gh/conda-forge/fftw-feedstock)
 OSX: [![TravisCI](https://travis-ci.org/conda-forge/fftw-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/fftw-feedstock) 
 Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/fftw-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/fftw-feedstock/branch/master)
+
+Current release info
+====================
+Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/fftw/badges/version.svg)](https://anaconda.org/conda-forge/fftw)
+Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/fftw/badges/downloads.svg)](https://anaconda.org/conda-forge/fftw)
 
 
 Updating fftw-feedstock
