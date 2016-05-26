@@ -35,7 +35,7 @@ TEST_CMD="eval cd tests && ${LIBRARY_SEARCH_VAR}=\"$PREFIX/lib\" make check-loca
 #
 build_cases=(
     # single
-    "$CONFIGURE --enable-float --enable-sse2 --enable-avx"
+    "$CONFIGURE --enable-float --enable-sse --enable-sse2 --enable-avx"
     # double
     "$CONFIGURE --enable-sse2 --enable-avx"
     # long double (SSE2 and AVX not supported)
