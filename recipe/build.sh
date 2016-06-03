@@ -18,7 +18,7 @@ fi
 export LDFLAGS="-L${PREFIX}/lib"
 export CFLAGS="${CFLAGS} -I${PREFIX}/include"
 
-CONFIGURE="./configure --prefix=$PREFIX --enable-shared --enable-threads --disable-fortran"
+CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-shared --enable-threads --disable-fortran"
 
 # (Note exported LDFLAGS and CFLAGS vars provided above.)
 BUILD_CMD="make -j${CPU_COUNT}"
@@ -33,24 +33,23 @@ TEST_CMD="eval cd tests && ${LIBRARY_SEARCH_VAR}=\"$PREFIX/lib\" make check-loca
 #
 # We build 3 different versions of fftw:
 #
+build_cases=(
+    # single
+    "$CONFIGURE --enable-float --enable-sse --enable-sse2 --enable-avx"
+    # double
+    "$CONFIGURE --enable-sse2 --enable-avx"
+    # long double (SSE2 and AVX not supported)
+    "$CONFIGURE --enable-long-double"
+)
 
-# (1) Single precision (fftw libraries have "f" suffix)
-$CONFIGURE --enable-float --enable-sse
-${BUILD_CMD}
-${INSTALL_CMD}
-${TEST_CMD}
-
-# (2) Long double precision (fftw libraries have "l" suffix)
-$CONFIGURE --enable-long-double
-${BUILD_CMD}
-${INSTALL_CMD}
-${TEST_CMD}
-
-# (3) Double precision (fftw libraries have no precision suffix)
-$CONFIGURE --enable-sse2
-${BUILD_CMD}
-${INSTALL_CMD}
-${TEST_CMD}
+for config in "${build_cases[@]}"
+do
+    :
+    $config
+    ${BUILD_CMD}
+    ${INSTALL_CMD}
+    ${TEST_CMD}
+done
 
 unset LIBRARY_SEARCH_VAR
 unset DYLIB_EXT
