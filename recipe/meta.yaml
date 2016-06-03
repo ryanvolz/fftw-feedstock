@@ -11,6 +11,12 @@ build:
     skip: True  # [win]
     number: 3
 
+requirements:
+    build:
+        # Pin perl to workaround a conda-build issue where it assumes
+        # a very specific version of perl (i.e. 5.18.2).
+        - perl >=5.20
+
 test:
     commands:
         - exit $(test -f ${PREFIX}/lib/libfftw3f.a)          # [not win]
