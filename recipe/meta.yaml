@@ -13,9 +13,7 @@ build:
 
 requirements:
     build:
-        # Pin perl to workaround a conda-build issue where it assumes
-        # a very specific version of perl (i.e. 5.18.2).
-        - perl >=5.20
+        - perl
 
 test:
     commands:
