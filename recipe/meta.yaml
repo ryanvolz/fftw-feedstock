@@ -1,15 +1,17 @@
+{% set version = "3.3.5" %}
+
 package:
     name: fftw
-    version: "3.3.4"
+    version: {{ version }}
 
 source:
-    fn: fftw-3.3.4.tar.gz
-    url: http://www.fftw.org/fftw-3.3.4.tar.gz
-    md5: 2edab8c06b24feeb3b82bbb3ebf3e7b3
+    fn: fftw-{{ version }}.tar.gz
+    url: http://www.fftw.org/fftw-{{ version }}.tar.gz
+    sha256: 8ecfe1b04732ec3f5b7d279fdb8efcad536d555f9d1e8fabd027037d45ea8bcf
 
 build:
     skip: True  # [win]
-    number: 3
+    number: 0
 
 requirements:
     build:
