@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ `uname` == 'Darwin' ]]; then
-    export LIBRARY_SEARCH_VAR=DYLD_FALLBACK_LIBRARY_PATH
-else
-    export LIBRARY_SEARCH_VAR=LD_LIBRARY_PATH
-fi
-
 export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
 export CFLAGS="${CFLAGS} -I${PREFIX}/include"
 
@@ -19,7 +13,7 @@ INSTALL_CMD="make install"
 # tests are performed during building as they are not available in the
 # installed package.
 # Additional tests can be run with "make smallcheck" and "make bigcheck"
-TEST_CMD="eval cd tests && ${LIBRARY_SEARCH_VAR}=\"$PREFIX/lib\" make check-local && cd -"
+TEST_CMD="eval cd tests && make check-local && cd -"
 
 #
 # We build 3 different versions of fftw:
