@@ -2,17 +2,11 @@
 
 if [[ `uname` == 'Darwin' ]]; then
     export LIBRARY_SEARCH_VAR=DYLD_FALLBACK_LIBRARY_PATH
-    export CC=clang
-    export CXX=clang++
-    export CXXFLAGS="-stdlib=libc++"
-    export CXX_LDFLAGS="-stdlib=libc++"
 else
     export LIBRARY_SEARCH_VAR=LD_LIBRARY_PATH
-    export CC=gcc
-    export CXX=g++
 fi
 
-export LDFLAGS="-L${PREFIX}/lib"
+export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
 export CFLAGS="${CFLAGS} -I${PREFIX}/include"
 
 CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-shared --enable-threads --disable-fortran"
@@ -48,10 +42,3 @@ do
     ${TEST_CMD}
 done
 
-unset LIBRARY_SEARCH_VAR
-unset CC
-unset CXX
-unset CXXFLAGS
-unset CXX_LDFLAGS
-unset LDFLAGS
-unset CFLAGS
