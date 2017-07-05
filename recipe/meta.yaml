@@ -15,6 +15,7 @@ build:
 
 requirements:
   build:
+    - toolchain
     - perl 5.22.2.1
 
 test:
@@ -40,8 +41,7 @@ test:
     ] %}
 
     {% for lib in fftw_libs %}
-    - test -f ${PREFIX}/lib/{{ lib }}.dylib    # [osx]
-    - test -f ${PREFIX}/lib/{{ lib }}.so       # [linux]
+    - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"  # [unix]
     {% endfor %}
 
 about:
