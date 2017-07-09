@@ -11,6 +11,7 @@ if (POLICY CMP0042)
 endif ()
 
 option (BUILD_SHARED_LIBS "Build shared libraries" ON)
+option (BUILD_TESTS "Build tests" ON)
 
 option (ENABLE_OPENMP "Use OpenMP for multithreading" OFF)
 option (ENABLE_THREADS "Use pthread for multithreading" OFF)
@@ -20,8 +21,10 @@ option (ENABLE_FLOAT "single-precision" OFF)
 option (ENABLE_LONG_DOUBLE "long-double precision" OFF)
 option (ENABLE_QUAD_PRECISION "quadruple-precision" OFF)
 
+option (ENABLE_SSE2 "Compile with SSE instruction set support" OFF)
 option (ENABLE_SSE2 "Compile with SSE2 instruction set support" OFF)
 option (ENABLE_AVX "Compile with AVX instruction set support" OFF)
+option (ENABLE_AVX2 "Compile with AVX2 instruction set support" OFF)
 
 set (LIBRARY_PATH lib${LIB_SUFFIX})
 
@@ -96,17 +99,51 @@ endif ()
 
 include (CheckCCompilerFlag)
 
+if (ENABLE_SSE)
+  foreach (FLAG "-msse" "/arch:SSE")
+    unset (HAVE_SSE CACHE)
+    check_c_compiler_flag (${FLAG} HAVE_SSE)
+    if (HAVE_SSE)
+      set (SSE_FLAG ${FLAG})
+      break()
+    endif ()
+  endforeach ()
+endif ()
+
 if (ENABLE_SSE2)
-  check_c_compiler_flag (-msse2 MSSE2)
-  set (HAVE_SSE2 TRUE)
+  foreach (FLAG "-msse2" "/arch:SSE2")
+    unset (HAVE_SSE2 CACHE)
+    check_c_compiler_flag (${FLAG} HAVE_SSE2)
+    if (HAVE_SSE2)
+      set (SSE2_FLAG ${FLAG})
+      break()
+    endif ()
+  endforeach ()
 endif ()
 
 if (ENABLE_AVX)
-  check_c_compiler_flag (-avx AVX)
-  set (HAVE_AVX TRUE)
+  foreach (FLAG "-mavx" "/arch:AVX")
+    unset (HAVE_AVX CACHE)
+    check_c_compiler_flag (${FLAG} HAVE_AVX)
+    if (HAVE_AVX)
+      set (AVX_FLAG ${FLAG})
+      break()
+    endif ()
+  endforeach ()
 endif ()
 
-if (ENABLE_SSE2 OR ENABLE_AVX)
+if (ENABLE_AVX2)
+  foreach (FLAG "-mavx2" "/arch:AVX2")
+    unset (HAVE_AVX2 CACHE)
+    check_c_compiler_flag (${FLAG} HAVE_AVX2)
+    if (HAVE_AVX2)
+      set (AVX2_FLAG ${FLAG})
+      break()
+    endif ()
+  endforeach ()
+endif ()
+
+if (HAVE_SSE2 OR HAVE_AVX)
   set (HAVE_SIMD TRUE)
 endif ()
 file(GLOB           fftw_api_SOURCE                 api/*.c             api/*.h)
@@ -116,6 +153,7 @@ file(GLOB           fftw_dft_scalar_codelets_SOURCE dft/scalar/codelets/*.c     
 file(GLOB           fftw_dft_simd_SOURCE            dft/simd/*.c        dft/simd/*.h)
 
 file(GLOB           fftw_dft_simd_sse2_SOURCE       dft/simd/sse2/*.c   dft/simd/sse2/*.h)
+file(GLOB           fftw_dft_simd_avx_SOURCE        dft/simd/avx/*.c    dft/simd/avx/*.h)
 file(GLOB           fftw_kernel_SOURCE              kernel/*.c          kernel/*.h)
 file(GLOB           fftw_rdft_SOURCE                rdft/*.c            rdft/*.h)
 file(GLOB           fftw_rdft_scalar_SOURCE         rdft/scalar/*.c     rdft/scalar/*.h)
@@ -129,6 +167,7 @@ file(GLOB           fftw_rdft_scalar_r2r_SOURCE     rdft/scalar/r2r/*.c
 
 file(GLOB           fftw_rdft_simd_SOURCE           rdft/simd/*.c       rdft/simd/*.h)
 file(GLOB           fftw_rdft_simd_sse2_SOURCE      rdft/simd/sse2/*.c  rdft/simd/sse2/*.h)
+file(GLOB           fftw_rdft_simd_avx_SOURCE       rdft/simd/avx/*.c   rdft/simd/avx/*.h)
 
 file(GLOB           fftw_reodft_SOURCE              reodft/*.c          reodft/*.h)
 file(GLOB           fftw_simd_support_SOURCE        simd-support/*.c    simd-support/*.h)
@@ -177,6 +216,7 @@ include_directories(
     dft/scalar/codelets # really needed?
     dft/simd
     dft/simd/sse2
+    dft/simd/avx
     rdft
     rdft/scalar
     rdft/simd
@@ -194,102 +234,101 @@ if (WITH_COMBINED_THREADS)
 endif ()
 
 
-if (ENABLE_SSE2)
+if (HAVE_SSE2)
   list (APPEND SOURCEFILES ${fftw_dft_simd_sse2_SOURCE} ${fftw_rdft_simd_sse2_SOURCE})
+endif ()
+
+if (HAVE_AVX)
+  list (APPEND SOURCEFILES ${fftw_dft_simd_avx_SOURCE} ${fftw_rdft_simd_avx_SOURCE})
 endif ()
 
 set (FFTW_VERSION 3.3.6)
 configure_file (config.h.in config.h @ONLY)
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
 
-set (targets fftw3)
+set (fftw3_lib fftw3)
 if (ENABLE_FLOAT)
-  list (APPEND targets fftw3f)
+  set (FFTW_SINGLE TRUE)
+  set (BENCHFFT_SINGLE TRUE)
+  set (fftw3_lib fftw3f)
 endif ()
 
 if (ENABLE_LONG_DOUBLE)
-  list (APPEND targets fftw3l)
+  set (FFTW_LDOUBLE TRUE)
+  set (BENCHFFT_LDOUBLE TRUE)
+  set(fftw3_lib fftw3l)
 endif ()
 
 if (ENABLE_QUAD_PRECISION)
-  list (APPEND targets fftw3q)
+  set (FFTW_QUAD TRUE)
+  set (BENCHFFT_QUAD TRUE)
+  set (fftw3_lib fftw3q)
 endif ()
 
 if (BUILD_SHARED_LIBS)
   add_definitions (-DFFTW_DLL)
 endif ()
 
-foreach (target ${targets})
 
-  add_library (${target} ${SOURCEFILES})
-  if (MSVC)
-    target_compile_definitions (${target} PRIVATE /bigobj)
+add_library (${fftw3_lib} ${SOURCEFILES})
+if (MSVC)
+  target_compile_definitions (${fftw3_lib} PRIVATE /bigobj)
+endif ()
+if (HAVE_SSE)
+  target_compile_options (${fftw3_lib} PRIVATE ${SSE_FLAG})
+endif ()
+if (HAVE_SSE2)
+  target_compile_options (${fftw3_lib} PRIVATE ${SSE2_FLAG})
+endif ()
+if (HAVE_AVX)
+  target_compile_options (${fftw3_lib} PRIVATE ${AVX_FLAG})
+endif ()
+if (HAVE_AVX2)
+  target_compile_options (${fftw3_lib} PRIVATE ${AVX_FLAG2})
+endif ()
+if (HAVE_LIBM)
+  target_link_libraries (${fftw3_lib} m)
+endif ()
+
+set (subtargets ${fftw3_lib})
+
+if (Threads_FOUND)
+  if (WITH_COMBINED_THREADS)
+    target_link_libraries (${fftw3_lib} ${CMAKE_THREAD_LIBS_INIT})
+  else ()
+    add_library (${fftw3_lib}_threads ${fftw_threads_SOURCE})
+    target_link_libraries (${fftw3_lib}_threads ${fftw3_lib})
+    target_link_libraries (${fftw3_lib}_threads ${CMAKE_THREAD_LIBS_INIT})
+    list (APPEND subtargets ${fftw3_lib}_threads)
   endif ()
-  if (MSSE2)
-    target_compile_options (${target} PRIVATE -msse2)
-  endif ()
-  if (AVX)
-    target_compile_options (${target} PRIVATE -avx)
-  endif ()
-  if (HAVE_LIBM)
-    target_link_libraries (${target} m)
-  endif ()
+endif ()
 
-  set (subtargets ${target})
+if (OPENMP_FOUND)
+  add_library (${fftw3_lib}_omp ${fftw_omp_SOURCE})
+  target_link_libraries (${fftw3_lib}_omp ${fftw3_lib})
+  target_link_libraries (${fftw3_lib}_omp ${CMAKE_THREAD_LIBS_INIT})
+  list (APPEND subtargets ${fftw3_lib}_omp)
+  target_compile_options (${fftw3_lib}_omp PRIVATE ${OpenMP_C_FLAGS})
+endif ()
 
-  if (Threads_FOUND)
-    if (WITH_COMBINED_THREADS)
-      target_link_libraries (${target} ${CMAKE_THREAD_LIBS_INIT})
-    else ()
-      add_library (${target}_threads ${fftw_threads_SOURCE})
-      target_link_libraries (${target}_threads ${target})
-      target_link_libraries (${target}_threads ${CMAKE_THREAD_LIBS_INIT})
-      list (APPEND subtargets ${target}_threads)
-    endif ()
-  endif ()
-
-  if (OPENMP_FOUND)
-    add_library (${target}_omp ${fftw_omp_SOURCE})
-    target_link_libraries (${target}_omp ${target})
-    target_link_libraries (${target}_omp ${CMAKE_THREAD_LIBS_INIT})
-    list (APPEND subtargets ${target}_omp)
-    target_compile_options (${target}_omp PRIVATE ${OpenMP_C_FLAGS})
-  endif ()
-
-  foreach(subtarget ${subtargets})
-    set_target_properties (${subtarget} PROPERTIES SOVERSION 3.5.6 VERSION 3)
-
-    if (target STREQUAL "fftw3f")
-      target_compile_definitions (${subtarget} PRIVATE FFTW_SINGLE)
-    endif ()
-    if (target STREQUAL "fftw3l")
-      target_compile_definitions (${subtarget} PRIVATE FFTW_LDOUBLE)
-    endif ()
-    if (target STREQUAL "fftw3q")
-      target_compile_definitions (${subtarget} PRIVATE FFTW_QUAD)
-    endif ()
-
-    install (TARGETS ${subtarget}
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${LIBRARY_PATH}
-            ARCHIVE DESTINATION ${LIBRARY_PATH})
-  endforeach ()
+foreach(subtarget ${subtargets})
+  set_target_properties (${subtarget} PROPERTIES SOVERSION 3.5.6 VERSION 3)
+  install (TARGETS ${subtarget}
+          RUNTIME DESTINATION bin
+          LIBRARY DESTINATION ${LIBRARY_PATH}
+          ARCHIVE DESTINATION ${LIBRARY_PATH})
 endforeach ()
-
 
 enable_testing ()
 
-if (Threads_FOUND)
-  add_executable (bench EXCLUDE_FROM_ALL ${fftw_libbench2_SOURCE} tests/bench.c tests/hook.c tests/fftw-bench.c)
+if (Threads_FOUND AND BUILD_TESTS)
+  add_executable (bench ${fftw_libbench2_SOURCE} tests/bench.c tests/hook.c tests/fftw-bench.c)
 
   if (WITH_COMBINED_THREADS)
-    target_link_libraries (bench fftw3)
+    target_link_libraries (bench ${fftw3_lib})
   else ()
-    target_link_libraries (bench fftw3_threads)
+    target_link_libraries (bench ${fftw3_lib}_threads)
   endif ()
-
-  add_custom_target (tests)
-  add_dependencies (tests bench)
 
   macro (fftw_add_test problem)
     add_test (NAME ${problem} COMMAND bench -s ${problem})
