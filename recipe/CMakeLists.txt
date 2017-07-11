@@ -66,7 +66,7 @@ check_prototype_definition (memalign "void *memalign(size_t alignment, size_t si
 check_prototype_definition (posix_memalign "int posix_memalign(void **memptr, size_t alignment, size_t size)" "0" stdlib.h HAVE_DECL_POSIX_MEMALIGN)
 
 include (CheckSymbolExists)
-check_symbol_exists (clock_gettime sys/time.h HAVE_CLOCK_GETTIME)
+check_symbol_exists (clock_gettime time.h HAVE_CLOCK_GETTIME)
 check_symbol_exists (gettimeofday sys/time.h HAVE_GETTIMEOFDAY)
 check_symbol_exists (drand48 stdlib.h HAVE_DRAND48)
 check_symbol_exists (srand48 stdlib.h HAVE_SRAND48)
@@ -82,7 +82,9 @@ if (UNIX)
 endif ()
 
 
-find_package (Threads)
+if (ENABLE_THREADS)
+  find_package (Threads)
+endif ()
 if (Threads_FOUND)
   if(CMAKE_USE_PTHREADS_INIT)
     set (USING_POSIX_THREADS 1)
@@ -154,6 +156,7 @@ file(GLOB           fftw_dft_simd_SOURCE            dft/simd/*.c        dft/simd
 
 file(GLOB           fftw_dft_simd_sse2_SOURCE       dft/simd/sse2/*.c   dft/simd/sse2/*.h)
 file(GLOB           fftw_dft_simd_avx_SOURCE        dft/simd/avx/*.c    dft/simd/avx/*.h)
+file(GLOB           fftw_dft_simd_avx2_SOURCE       dft/simd/avx2/*.c   dft/simd/avx2/*.h)
 file(GLOB           fftw_kernel_SOURCE              kernel/*.c          kernel/*.h)
 file(GLOB           fftw_rdft_SOURCE                rdft/*.c            rdft/*.h)
 file(GLOB           fftw_rdft_scalar_SOURCE         rdft/scalar/*.c     rdft/scalar/*.h)
@@ -168,6 +171,7 @@ file(GLOB           fftw_rdft_scalar_r2r_SOURCE     rdft/scalar/r2r/*.c
 file(GLOB           fftw_rdft_simd_SOURCE           rdft/simd/*.c       rdft/simd/*.h)
 file(GLOB           fftw_rdft_simd_sse2_SOURCE      rdft/simd/sse2/*.c  rdft/simd/sse2/*.h)
 file(GLOB           fftw_rdft_simd_avx_SOURCE       rdft/simd/avx/*.c   rdft/simd/avx/*.h)
+file(GLOB           fftw_rdft_simd_avx2_SOURCE      rdft/simd/avx2/*.c   rdft/simd/avx2/*.h)
 
 file(GLOB           fftw_reodft_SOURCE              reodft/*.c          reodft/*.h)
 file(GLOB           fftw_simd_support_SOURCE        simd-support/*.c    simd-support/*.h)
@@ -242,9 +246,11 @@ if (HAVE_AVX)
   list (APPEND SOURCEFILES ${fftw_dft_simd_avx_SOURCE} ${fftw_rdft_simd_avx_SOURCE})
 endif ()
 
+if (HAVE_AVX2)
+  list (APPEND SOURCEFILES ${fftw_dft_simd_avx2_SOURCE} ${fftw_rdft_simd_avx2_SOURCE})
+endif ()
+
 set (FFTW_VERSION 3.3.6)
-configure_file (config.h.in config.h @ONLY)
-include_directories (${CMAKE_CURRENT_BINARY_DIR})
 
 set (fftw3_lib fftw3)
 if (ENABLE_FLOAT)
@@ -264,6 +270,9 @@ if (ENABLE_QUAD_PRECISION)
   set (BENCHFFT_QUAD TRUE)
   set (fftw3_lib fftw3q)
 endif ()
+
+configure_file (config.h.in config.h @ONLY)
+include_directories (${CMAKE_CURRENT_BINARY_DIR})
 
 if (BUILD_SHARED_LIBS)
   add_definitions (-DFFTW_DLL)
