@@ -1,0 +1,4 @@
+c_compiler:
+- vs2008
+fortran_compiler:
+- flang
