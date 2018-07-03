@@ -16,7 +16,6 @@ requirements:
   build:
     - perl 5.22.2.1  # [not win]
     - cmake  # [win]
-    - {{ compiler('fortran') }}
     - {{ compiler('c') }}
   host:
 
