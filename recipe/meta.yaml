@@ -14,7 +14,7 @@ build:
 
 requirements:
   build:
-    - perl 5.22.2.1  # [not win]
+    - perl   # [not win]
     - cmake  # [win]
     - {{ compiler('c') }}
   host:
