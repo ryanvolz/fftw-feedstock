@@ -1,4 +1,2 @@
 c_compiler:
 - vs2015
-fortran_compiler:
-- flang
