@@ -10,22 +10,16 @@ source:
   sha256: 3b609b7feba5230e8f6dd8d245ddbefac324c5a6ae4186947670d9ac2cd25573
 
 build:
-  number: 0
-  features:
-    - vc9  # [win and py27]
-    - vc14  # [win and py>=35]
-  skip: true  # [win and py35]
+  number: 1
 
 requirements:
   build:
-    - python         # [win]
-    - toolchain
-    - perl 5.22.2.1  # [not win]
+    - perl   # [not win]
     - cmake  # [win]
+    - {{ compiler('c') }}
+  host:
 
 test:
-  requires:
-    - python {{ os.environ.get('PY_VER', '') + '*' }}  # [win]
   commands:
     - exit $(test -f ${PREFIX}/lib/libfftw3f.a)          # [not win]
     - exit $(test -f ${PREFIX}/lib/libfftw3.a)           # [not win]
