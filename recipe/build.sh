@@ -3,7 +3,7 @@
 export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
 export CFLAGS="${CFLAGS} -I${PREFIX}/include -O3 -fomit-frame-pointer -fstrict-aliasing -ffast-math"
 
-CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-shared --enable-threads --disable-fortran"
+CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-shared --enable-threads --disable-fortran --enable-openmp"
 
 # (Note exported LDFLAGS and CFLAGS vars provided above.)
 BUILD_CMD="make -j${CPU_COUNT}"
@@ -35,4 +35,3 @@ do
     ${INSTALL_CMD}
     ${TEST_CMD}
 done
-
