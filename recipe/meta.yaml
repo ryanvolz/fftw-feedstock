@@ -18,9 +18,9 @@ requirements:
     - cmake  # [win]
     - {{ compiler('c') }}
   host:
-    - openmp  # [osx]
+    - llvm-openmp >=4.0.1  # [osx]
   run:
-    - openmp  # [osx]
+    - llvm-openmp >=4.0.1  # [osx]
 
 test:
   commands:
