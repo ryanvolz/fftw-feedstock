@@ -18,9 +18,11 @@ requirements:
     - cmake  # [win]
     - {{ compiler('c') }}
   host:
+{% if not compiler('c').startswith("toolchain") %}  # [osx]
     - llvm-openmp >=4.0.1  # [osx]
   run:
     - llvm-openmp >=4.0.1  # [osx]
+{% endif %}  # [osx]
 
 test:
   commands:
@@ -30,9 +32,11 @@ test:
     - exit $(test -f ${PREFIX}/lib/libfftw3f_threads.a)  # [not win]
     - exit $(test -f ${PREFIX}/lib/libfftw3_threads.a)   # [not win]
     - exit $(test -f ${PREFIX}/lib/libfftw3l_threads.a)  # [not win]
+    {% if not compiler('c').startswith("toolchain") %}  # [osx]
     - exit $(test -f ${PREFIX}/lib/libfftw3f_omp.a)  # [not win]
     - exit $(test -f ${PREFIX}/lib/libfftw3_omp.a)   # [not win]
     - exit $(test -f ${PREFIX}/lib/libfftw3l_omp.a)  # [not win]
+    {% endif %}  # [osx]
 
     # Verify headers are installed
     - test -f ${PREFIX}/include/fftw3.h                  # [not win]
@@ -42,18 +46,26 @@ test:
     {% set fftw_libs = [
             "libfftw3",
             "libfftw3_threads",
-            "libfftw3_omp",
             "libfftw3f",
             "libfftw3f_threads",
-            "libfftw3f_omp",
             "libfftw3l",
             "libfftw3l_threads",
+    ] %}
+    {% set fftw_omp_libs = [
+            "libfftw3_omp",
+            "libfftw3f_omp",
             "libfftw3l_omp",
     ] %}
 
     {% for lib in fftw_libs %}
     - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"  # [unix]
     {% endfor %}
+
+    {% if not compiler('c').startswith("toolchain") %}  # [osx]
+    {% for lib in fftw_omp_libs %}
+    - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"  # [unix]
+    {% endfor %}
+    {% endif %}  # [osx]
 
     {% set fftw_libs = ["fftw3f", "fftw3"] %}
 

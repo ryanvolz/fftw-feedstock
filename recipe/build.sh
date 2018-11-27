@@ -3,7 +3,15 @@
 export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
 export CFLAGS="${CFLAGS} -I${PREFIX}/include -O3 -fomit-frame-pointer -fstrict-aliasing -ffast-math"
 
-CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-shared --enable-threads --disable-fortran --enable-openmp"
+CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-shared --enable-threads --disable-fortran"
+
+if [[ `uname` == Darwin ]] && [[ "$CC" != "clang" ]]
+then
+    CONFIGURE=${CONFIGURE}" --enable-openmp"
+elif [[ `uname` == Linux ]]
+then
+    CONFIGURE=${CONFIGURE}" --enable-openmp"
+fi
 
 # (Note exported LDFLAGS and CFLAGS vars provided above.)
 BUILD_CMD="make -j${CPU_COUNT}"
