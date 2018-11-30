@@ -5,6 +5,14 @@ export CFLAGS="${CFLAGS} -I${PREFIX}/include -O3 -fomit-frame-pointer -fstrict-a
 
 CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-shared --enable-threads --disable-fortran"
 
+if [[ `uname` == Darwin ]] && [[ "$CC" != "clang" ]]
+then
+    CONFIGURE=${CONFIGURE}" --enable-openmp"
+elif [[ `uname` == Linux ]]
+then
+    CONFIGURE=${CONFIGURE}" --enable-openmp"
+fi
+
 # (Note exported LDFLAGS and CFLAGS vars provided above.)
 BUILD_CMD="make -j${CPU_COUNT}"
 INSTALL_CMD="make install"
@@ -35,4 +43,3 @@ do
     ${INSTALL_CMD}
     ${TEST_CMD}
 done
-
