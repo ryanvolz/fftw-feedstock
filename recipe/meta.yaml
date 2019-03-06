@@ -10,13 +10,14 @@ source:
   sha256: 6113262f6e92c5bd474f2875fa1b01054c4ad5040f6b0da7c03c98821d9ae303
 
 build:
-  number: 1002
+  number: 1003
 
 requirements:
   build:
     - perl   # [not win]
     - cmake  # [win]
     - {{ compiler('c') }}
+    - {{ compiler('fortran') }}  # [not win]
   host:
     - llvm-openmp >=4.0.1  # [osx]
   run:
@@ -24,6 +25,10 @@ requirements:
 
 test:
   commands:
+    # Verify library contains Fortran symbols
+    - |                                                  # [not win]
+      strings ${PREFIX}/lib/libfftw3.a | grep -q dfftw   # [not win]
+    # Verify existence of library files
     - exit $(test -f ${PREFIX}/lib/libfftw3f.a)          # [not win]
     - exit $(test -f ${PREFIX}/lib/libfftw3.a)           # [not win]
     - exit $(test -f ${PREFIX}/lib/libfftw3l.a)          # [not win]
@@ -82,3 +87,4 @@ extra:
     - grlee77
     - jschueller
     - beckermr
+    - egpbos
