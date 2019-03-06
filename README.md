@@ -115,6 +115,7 @@ Feedstock Maintainers
 
 * [@alexbw](https://github.com/alexbw/)
 * [@beckermr](https://github.com/beckermr/)
+* [@egpbos](https://github.com/egpbos/)
 * [@grlee77](https://github.com/grlee77/)
 * [@jakirkham](https://github.com/jakirkham/)
 * [@jjhelmus](https://github.com/jjhelmus/)
