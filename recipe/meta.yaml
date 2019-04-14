@@ -55,7 +55,8 @@ test:
     - python
   commands:
     # Verify library contains Fortran symbols
-    - [[ `strings ${PREFIX}/lib/libfftw3.a | grep -q dfftw` == "dfftw" ]] || exit 1  # [not win]
+    - |                                                                              # [not win]
+      [[ `strings ${PREFIX}/lib/libfftw3.a | grep -q dfftw` == "dfftw" ]] || exit 1  # [not win]
 
     # Verify existence of library files
     - test -f ${PREFIX}/lib/libfftw3f.a           # [not win]
