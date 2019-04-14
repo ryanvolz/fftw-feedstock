@@ -5,7 +5,7 @@ export CFLAGS="${CFLAGS} -I${PREFIX}/include -O3 -fomit-frame-pointer -fstrict-a
 
 CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-threads"
 
-if [ -z "$mpi" ]; then
+if [[ "$mpi" != "nompi" ]]; then
     CONFIGURE="${CONFIGURE} --enable-mpi"
 fi
 
