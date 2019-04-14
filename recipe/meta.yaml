@@ -1,4 +1,8 @@
 {% set version = "3.3.8" %}
+{% set build = 1005 %}
+
+# ensure mpi is defined (needed for conda-smithy recipe-lint)
+{% set mpi = mpi or 'nompi' %}
 
 package:
   name: fftw
@@ -10,7 +14,28 @@ source:
   sha256: 6113262f6e92c5bd474f2875fa1b01054c4ad5040f6b0da7c03c98821d9ae303
 
 build:
-  number: 1004
+  # prioritize nompi variant via build number
+  {% if mpi == 'nompi' %}
+  {% set build = build + 100 %}
+  {% endif %}
+  number: {{ build }}
+
+  # add build string so packages can depend on
+  # mpi or nompi variants explicitly:
+  # `pkg * mpi_mpich_*` for mpich
+  # `pkg * mpi_*` for any mpi
+  # `pkg * nompi_*` for no mpi
+  {% if mpi != 'nompi' %}
+  {% set mpi_prefix = "mpi_" + mpi %}
+  {% else %}
+  {% set mpi_prefix = "nompi" %}
+  {% endif %}
+  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
+
+  {% if mpi != 'nompi' %}
+  run_exports:
+    - {{ name }} * {{ mpi_prefix }}_*
+  {% endif %}
 
 requirements:
   build:
@@ -18,7 +43,9 @@ requirements:
     - cmake  # [win]
     - {{ compiler('c') }}
     - {{ compiler('fortran') }}  # [not win]
+    - llvm-openmp >=4.0.1  # [osx]
   host:
+    - {{ mpi }}  # [mpi != 'nompi']
     - llvm-openmp >=4.0.1  # [osx]
   run:
     - llvm-openmp >=4.0.1  # [osx]
