@@ -10,12 +10,28 @@ jobs:
   strategy:
     maxParallel: 4
     matrix:
-      win_c_compilervs2008:
-        CONFIG: win_c_compilervs2008
+      win_c_compilervs2008mpimpich:
+        CONFIG: win_c_compilervs2008mpimpich
         CONDA_BLD_PATH: D:\\bld\\
         UPLOAD_PACKAGES: False
-      win_c_compilervs2015:
-        CONFIG: win_c_compilervs2015
+      win_c_compilervs2008mpinompi:
+        CONFIG: win_c_compilervs2008mpinompi
+        CONDA_BLD_PATH: D:\\bld\\
+        UPLOAD_PACKAGES: False
+      win_c_compilervs2008mpiopenmpi:
+        CONFIG: win_c_compilervs2008mpiopenmpi
+        CONDA_BLD_PATH: D:\\bld\\
+        UPLOAD_PACKAGES: False
+      win_c_compilervs2015mpimpich:
+        CONFIG: win_c_compilervs2015mpimpich
+        CONDA_BLD_PATH: D:\\bld\\
+        UPLOAD_PACKAGES: False
+      win_c_compilervs2015mpinompi:
+        CONFIG: win_c_compilervs2015mpinompi
+        CONDA_BLD_PATH: D:\\bld\\
+        UPLOAD_PACKAGES: False
+      win_c_compilervs2015mpiopenmpi:
+        CONFIG: win_c_compilervs2015mpiopenmpi
         CONDA_BLD_PATH: D:\\bld\\
         UPLOAD_PACKAGES: False
   steps:
