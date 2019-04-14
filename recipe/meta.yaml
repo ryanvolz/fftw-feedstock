@@ -34,7 +34,7 @@ build:
 
   {% if mpi != 'nompi' %}
   run_exports:
-    - {{ name }} * {{ mpi_prefix }}_*
+    - fftw * {{ mpi_prefix }}_*
   {% endif %}
 
 requirements:
