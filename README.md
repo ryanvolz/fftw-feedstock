@@ -78,45 +78,17 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>win_c_compilervs2008mpimpich</td>
+              <td>win_c_compilervs2008</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2008mpimpich" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2008" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>win_c_compilervs2008mpinompi</td>
+              <td>win_c_compilervs2015</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2008mpinompi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_c_compilervs2008mpiopenmpi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2008mpiopenmpi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_c_compilervs2015mpimpich</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015mpimpich" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_c_compilervs2015mpinompi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015mpinompi" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_c_compilervs2015mpiopenmpi</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015mpiopenmpi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015" alt="variant">
                 </a>
               </td>
             </tr>
