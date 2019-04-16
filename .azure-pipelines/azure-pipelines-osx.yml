@@ -10,9 +10,15 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      osx_:
-        CONFIG: osx_
-        UPLOAD_PACKAGES: False
+      osx_mpimpich:
+        CONFIG: osx_mpimpich
+        UPLOAD_PACKAGES: True
+      osx_mpinompi:
+        CONFIG: osx_mpinompi
+        UPLOAD_PACKAGES: True
+      osx_mpiopenmpi:
+        CONFIG: osx_mpiopenmpi
+        UPLOAD_PACKAGES: True
 
   steps:
   # TODO: Fast finish on azure pipelines?
