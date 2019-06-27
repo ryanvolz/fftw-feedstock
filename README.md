@@ -36,59 +36,150 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_mpimpich</td>
+              <td>linux_mpimpichpython2.7</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpimpich" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpimpichpython2.7" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_mpinompi</td>
+              <td>linux_mpimpichpython3.6</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpinompi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpimpichpython3.6" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_mpiopenmpi</td>
+              <td>linux_mpimpichpython3.7</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpiopenmpi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpimpichpython3.7" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_mpimpich</td>
+              <td>linux_mpinompipython2.7</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpimpich" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpinompipython2.7" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_mpinompi</td>
+              <td>linux_mpinompipython3.6</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpinompi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpinompipython3.6" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_mpiopenmpi</td>
+              <td>linux_mpinompipython3.7</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpiopenmpi" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpinompipython3.7" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>win_c_compilervs2008</td>
+              <td>linux_mpiopenmpipython2.7</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2008" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpiopenmpipython2.7" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>win_c_compilervs2015</td>
+              <td>linux_mpiopenmpipython3.6</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpiopenmpipython3.6" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_mpiopenmpipython3.7</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=linux&configuration=linux_mpiopenmpipython3.7" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpimpichpython2.7</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpimpichpython2.7" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpimpichpython3.6</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpimpichpython3.6" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpimpichpython3.7</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpimpichpython3.7" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpinompipython2.7</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpinompipython2.7" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpinompipython3.6</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpinompipython3.6" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpinompipython3.7</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpinompipython3.7" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpiopenmpipython2.7</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpiopenmpipython2.7" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpiopenmpipython3.6</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpiopenmpipython3.6" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_mpiopenmpipython3.7</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=osx&configuration=osx_mpiopenmpipython3.7" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_c_compilervs2008python2.7</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2008python2.7" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_c_compilervs2015python3.6</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015python3.6" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_c_compilervs2015python3.7</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=298&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/fftw-feedstock?branchName=master&jobName=win&configuration=win_c_compilervs2015python3.7" alt="variant">
                 </a>
               </td>
             </tr>
@@ -97,6 +188,7 @@ Current build status
       </details>
     </td>
   </tr>
+![ppc64le disabled](https://img.shields.io/badge/ppc64le-disabled-lightgrey.svg)
 </table>
 
 Current release info
