@@ -10,14 +10,32 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
-      osx_mpimpich:
-        CONFIG: osx_mpimpich
+      osx_mpimpichpython2.7:
+        CONFIG: osx_mpimpichpython2.7
         UPLOAD_PACKAGES: True
-      osx_mpinompi:
-        CONFIG: osx_mpinompi
+      osx_mpimpichpython3.6:
+        CONFIG: osx_mpimpichpython3.6
         UPLOAD_PACKAGES: True
-      osx_mpiopenmpi:
-        CONFIG: osx_mpiopenmpi
+      osx_mpimpichpython3.7:
+        CONFIG: osx_mpimpichpython3.7
+        UPLOAD_PACKAGES: True
+      osx_mpinompipython2.7:
+        CONFIG: osx_mpinompipython2.7
+        UPLOAD_PACKAGES: True
+      osx_mpinompipython3.6:
+        CONFIG: osx_mpinompipython3.6
+        UPLOAD_PACKAGES: True
+      osx_mpinompipython3.7:
+        CONFIG: osx_mpinompipython3.7
+        UPLOAD_PACKAGES: True
+      osx_mpiopenmpipython2.7:
+        CONFIG: osx_mpiopenmpipython2.7
+        UPLOAD_PACKAGES: True
+      osx_mpiopenmpipython3.6:
+        CONFIG: osx_mpiopenmpipython3.6
+        UPLOAD_PACKAGES: True
+      osx_mpiopenmpipython3.7:
+        CONFIG: osx_mpiopenmpipython3.7
         UPLOAD_PACKAGES: True
 
   steps:
@@ -41,7 +59,7 @@ jobs:
 
   - script: |
       source activate base
-      conda install -n base -c conda-forge --quiet --yes conda-forge-ci-setup=2 conda-build shyaml
+      conda install -n base -c conda-forge --quiet --yes conda-forge-ci-setup=2 conda-build
     displayName: 'Add conda-forge-ci-setup=2'
 
   - script: |
@@ -49,7 +67,7 @@ jobs:
       echo "Configuring conda."
 
       setup_conda_rc ./ ./recipe ./.ci_support/${CONFIG}.yaml
-
+      export CI=azure
       source run_conda_forge_build_setup
       conda update --yes --quiet --override-channels -c conda-forge -c defaults --all
     env: {
