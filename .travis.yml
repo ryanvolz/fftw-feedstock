@@ -1,0 +1,44 @@
+# This file was generated automatically from conda-smithy. To update this configuration,
+# update the conda-forge.yml and/or the recipe/meta.yaml.
+
+language: generic
+
+env:
+  global:
+    # The BINSTAR_TOKEN secure variable. This is defined canonically in conda-forge.yml.
+    #     - secure: "Yc0RMJJEFJTz4oSpevbCp79ZhQSJlV6Cg+8iXvuQMfBq4K+RPBpthrQMoV62dgFEgK45poLKvpdOvHu3XjZaJ5eyWLR7v9NirSE0ndNpZfxH+vUbY+Bx1ZgpPIS46r7V13tRbDWtpWa/bUpgaXNzayYi15PrTmJveZvRyq4dlvCjh+BJ22mu7+XmCou7q4HSCMLC26IAHvccX8Co+9UehRaWad4GbpljC5Emgd86vgN3Q6cPp7hqZ7rQR6HgaTm0x+1oQgTVPMNOqYmMWbgQJG/UIe9k2WNQGSdXtNdZoJupktlwO1h15wUhuhw6uYFLixO7LrO8oo9gef9d/j7h+oqdYf2u3fpomtUWf1tTD1TgeBqAH36ut/ASePfI8i+QDWtKs21Rq9CDmEnikYZgKMFB6KtwjQXXCbT9KQX1I+gmc1WTn0LnAnE3Rc/kkotI4onwR3xznr7Uf8kg9LePUP9KbI5s7tdaCfzVsNfh6LfKH5STlJ4LrlLtlBUw+O7GtZ+WRkoWTIISQvjZch/vmyAkfHDNnCnQm52cxiuwmxeyaQGVEIPfl2bRBx5sqE6wWVeDuWItKWeZPjtavnwP5qtldojBHfW5xipd7wlKItnLOLdWIwa3m52b57o+ea9Luxguxq6PWAbEnw6v03VKlasBcfn1uLIfJtqDxIMXWHI="
+
+matrix:
+  include:
+    - env: CONFIG=linux_ppc64le_mpimpichpython2.7 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux-ppc64le
+
+    - env: CONFIG=linux_ppc64le_mpimpichpython3.6 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux-ppc64le
+
+    - env: CONFIG=linux_ppc64le_mpimpichpython3.7 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux-ppc64le
+
+    - env: CONFIG=linux_ppc64le_mpinompipython2.7 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux-ppc64le
+
+    - env: CONFIG=linux_ppc64le_mpinompipython3.6 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux-ppc64le
+
+    - env: CONFIG=linux_ppc64le_mpinompipython3.7 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux-ppc64le
+
+    - env: CONFIG=linux_ppc64le_mpiopenmpipython2.7 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux-ppc64le
+
+    - env: CONFIG=linux_ppc64le_mpiopenmpipython3.6 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux-ppc64le
+
+    - env: CONFIG=linux_ppc64le_mpiopenmpipython3.7 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=condaforge/linux-anvil-ppc64le
+      os: linux-ppc64le
+
+script:
+  - export CI=travis
+
+
+  - if [[ ${PLATFORM} =~ .*linux.* ]]; then ./.travis/run_docker_build.sh; fi 
