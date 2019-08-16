@@ -36,7 +36,7 @@ if [[ "$target_platform" == "linux-64" ]] || [[ "$target_platform" == "linux-32"
   ARCH_OPTS_LONG_DOUBLE="--enable-long-double"
 fi
 
-if [[ "$target_platform" == "ppc64le" ]]; then
+if [[ "$target_platform" == "linux-ppc64le" ]]; then
   ARCH_OPTS_SINGLE="--enable-alitvec --enable-vsx"
   ARCH_OPTS_DOUBLE="--enable-vsx"
 fi
