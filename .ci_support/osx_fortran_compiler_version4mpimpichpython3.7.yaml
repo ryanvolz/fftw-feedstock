@@ -17,9 +17,9 @@ macos_machine:
 macos_min_version:
 - '10.9'
 mpi:
-- nompi
+- mpich
 perl:
-- '5.26'
+- 5.26.2
 pin_run_as_build:
   perl:
     max_pin: x.x.x
