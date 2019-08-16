@@ -10,6 +10,42 @@ jobs:
   strategy:
     maxParallel: 8
     matrix:
+      linux_aarch64_mpimpichpython2.7:
+        CONFIG: linux_aarch64_mpimpichpython2.7
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      linux_aarch64_mpimpichpython3.6:
+        CONFIG: linux_aarch64_mpimpichpython3.6
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      linux_aarch64_mpimpichpython3.7:
+        CONFIG: linux_aarch64_mpimpichpython3.7
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      linux_aarch64_mpinompipython2.7:
+        CONFIG: linux_aarch64_mpinompipython2.7
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      linux_aarch64_mpinompipython3.6:
+        CONFIG: linux_aarch64_mpinompipython3.6
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      linux_aarch64_mpinompipython3.7:
+        CONFIG: linux_aarch64_mpinompipython3.7
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      linux_aarch64_mpiopenmpipython2.7:
+        CONFIG: linux_aarch64_mpiopenmpipython2.7
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      linux_aarch64_mpiopenmpipython3.6:
+        CONFIG: linux_aarch64_mpiopenmpipython3.6
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
+      linux_aarch64_mpiopenmpipython3.7:
+        CONFIG: linux_aarch64_mpiopenmpipython3.7
+        UPLOAD_PACKAGES: True
+        DOCKER_IMAGE: condaforge/linux-anvil-aarch64
       linux_mpimpichpython2.7:
         CONFIG: linux_mpimpichpython2.7
         UPLOAD_PACKAGES: True
