@@ -47,6 +47,7 @@ requirements:
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - llvm-openmp >=4.0.1  # [osx]
+    - make
   run:
     - llvm-openmp >=4.0.1  # [osx]
 
