@@ -19,7 +19,7 @@ macos_min_version:
 mpi:
 - nompi
 perl:
-- '5.26'
+- 5.26.2
 pin_run_as_build:
   perl:
     max_pin: x.x.x
@@ -27,4 +27,4 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
-- '3.6'
+- '3.7'
