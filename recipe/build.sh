@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
-export CFLAGS="${CFLAGS} -I${PREFIX}/include -O3 -fomit-frame-pointer -fstrict-aliasing -ffast-math"
+#export CFLAGS="${CFLAGS} -I${PREFIX}/include -O3 -fomit-frame-pointer -fstrict-aliasing -ffast-math"
+export CFLAGS="${CFLAGS} -I${PREFIX}/include -O1 -fomit-frame-pointer -fstrict-aliasing"
 
-CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-threads --disable-fortran"
+CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-threads"
 
 if [[ "$mpi" != "nompi" ]]; then
     CONFIGURE="${CONFIGURE} --enable-mpi"
@@ -33,13 +34,14 @@ TEST_CMD="eval cd tests && make check-local && cd -"
 if [[ "$target_platform" == "linux-64" ]] || [[ "$target_platform" == "linux-32" ]] || [[ "$target_platform" == "osx-64" ]]; then
   ARCH_OPTS_SINGLE="--enable-sse --enable-sse2 --enable-avx"
   ARCH_OPTS_DOUBLE="--enable-sse2 --enable-avx"
-  ARCH_OPTS_LONG_DOUBLE="--enable-long-double"
 fi
 
 if [[ "$target_platform" == "linux-ppc64le" ]]; then
-  ARCH_OPTS_SINGLE="--enable-alitvec --enable-vsx"
+  # ARCH_OPTS_SINGLE="--enable-vsx"  # results in test fails. See https://github.com/FFTW/fftw3/issues/59
+  ARCH_OPTS_SINGLE=""
   ARCH_OPTS_DOUBLE="--enable-vsx"
 fi
+ARCH_OPTS_LONG_DOUBLE="--enable-long-double"
 
 build_cases=(
     # single
