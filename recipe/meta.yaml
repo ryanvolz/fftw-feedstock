@@ -52,7 +52,7 @@ requirements:
 
 test:
   requires:
-    - python =3.7
+    - python >=3.6.0,<3.7.0a0
   commands:
     # Verify library contains Fortran symbols
     - |                                                 # [not win]
