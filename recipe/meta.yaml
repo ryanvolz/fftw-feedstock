@@ -52,8 +52,11 @@ requirements:
 
 test:
   requires:
-    - python =3.7  # [unix]
-    - python  # [win]
+    {% if c_compiler == 'vs2008' %}
+    - python =2.7
+    {% else %}
+    - python =3.6
+    {% endif %}
   commands:
     # Verify library contains Fortran symbols
     - |                                                 # [not win]
