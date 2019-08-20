@@ -38,8 +38,8 @@ fi
 
 if [[ "$target_platform" == "linux-ppc64le" ]]; then
   # ARCH_OPTS_SINGLE="--enable-vsx"  # results in test fails. See https://github.com/FFTW/fftw3/issues/59
-  ARCH_OPTS_SINGLE=""
-  ARCH_OPTS_DOUBLE="--enable-vsx"
+  ARCH_OPTS_SINGLE="--enable-silent-rules"
+  ARCH_OPTS_DOUBLE="--enable-vsx --enable-silent-rules"
   # ARCH_OPTS_LONG_DOUBLE="--enable-long-double"  # Disabled to reduce build times and avoid Travis time out
   ARCH_OPTS_LONG_DOUBLE=""
 fi
