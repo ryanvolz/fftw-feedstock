@@ -1,5 +1,5 @@
 {% set version = "3.3.8" %}
-{% set build = 1007 %}
+{% set build = 1009 %}
 
 # ensure mpi is defined (needed for conda-smithy recipe-lint)
 {% set mpi = mpi or 'nompi' %}
@@ -53,7 +53,11 @@ requirements:
 
 test:
   requires:
-    - python
+    {% if c_compiler == 'vs2008' %}
+    - python =2.7
+    {% else %}
+    - python =3.6
+    {% endif %}
   commands:
     # Verify library contains Fortran symbols
     - |                                                 # [not win]
@@ -62,13 +66,13 @@ test:
     # Verify existence of library files
     - test -f ${PREFIX}/lib/libfftw3f.a || exit 1           # [not win]
     - test -f ${PREFIX}/lib/libfftw3.a || exit 1            # [not win]
-    - test -f ${PREFIX}/lib/libfftw3l.a || exit 1           # [not win]
+    - test -f ${PREFIX}/lib/libfftw3l.a || exit 1           # [not win and not ppc64le]
     - test -f ${PREFIX}/lib/libfftw3f_threads.a || exit 1   # [not win]
     - test -f ${PREFIX}/lib/libfftw3_threads.a || exit 1    # [not win]
-    - test -f ${PREFIX}/lib/libfftw3l_threads.a || exit 1   # [not win]
+    - test -f ${PREFIX}/lib/libfftw3l_threads.a || exit 1   # [not win and not ppc64le]
     - test -f ${PREFIX}/lib/libfftw3f_omp.a || exit 1       # [not win]
     - test -f ${PREFIX}/lib/libfftw3_omp.a || exit 1        # [not win]
-    - test -f ${PREFIX}/lib/libfftw3l_omp.a || exit 1       # [not win]
+    - test -f ${PREFIX}/lib/libfftw3l_omp.a || exit 1       # [not win and not ppc64le]
 
     # Verify headers are installed
     - test -f ${PREFIX}/include/fftw3.h || exit 1           # [not win]
@@ -80,17 +84,23 @@ test:
             "libfftw3_threads",
             "libfftw3f",
             "libfftw3f_threads",
+    ] %}
+    {% set fftwl_libs = [
             "libfftw3l",
             "libfftw3l_threads",
     ] %}
     {% set fftw_omp_libs = [
             "libfftw3_omp",
             "libfftw3f_omp",
+    ] %}
+    {% set fftwl_omp_libs = [
             "libfftw3l_omp",
     ] %}
     {% set fftw_mpi_libs = [
             "libfftw3_mpi",
             "libfftw3f_mpi",
+    ] %}
+    {% set fftwl_mpi_libs = [
             "libfftw3l_mpi",
     ] %}
 
@@ -98,8 +108,16 @@ test:
     - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"  # [unix]
     {% endfor %}
 
+    {% for lib in fftwl_libs %}
+    - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"  # [unix and not ppc64le]
+    {% endfor %}
+
     {% for lib in fftw_omp_libs %}
     - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"  # [unix]
+    {% endfor %}
+
+    {% for lib in fftwl_omp_libs %}
+    - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"  # [unix and not ppc64le]
     {% endfor %}
 
     {% if mpi != 'nompi' %}
@@ -107,6 +125,11 @@ test:
     # you need to link to the mpi libs to load the dll, so we just test
     # if it exists
     - test -f ${PREFIX}/lib/{{ lib }}${SHLIB_EXT} || exit 1  # [unix]
+    {% endfor %}
+    {% for lib in fftwl_mpi_libs %}
+    # you need to link to the mpi libs to load the dll, so we just test
+    # if it exists
+    - test -f ${PREFIX}/lib/{{ lib }}${SHLIB_EXT} || exit 1  # [unix and not ppc64le]
     {% endfor %}
     {% endif %}
 
