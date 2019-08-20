@@ -37,11 +37,19 @@ if [[ "$target_platform" == "linux-64" ]] || [[ "$target_platform" == "linux-32"
 fi
 
 if [[ "$target_platform" == "linux-ppc64le" ]]; then
-  # ARCH_OPTS_SINGLE="--enable-vsx"  # results in test fails. See https://github.com/FFTW/fftw3/issues/59
-  ARCH_OPTS_SINGLE="--enable-silent-rules"
-  ARCH_OPTS_DOUBLE="--enable-vsx --enable-silent-rules"
-  # ARCH_OPTS_LONG_DOUBLE="--enable-long-double"  # Disabled to reduce build times and avoid Travis time out
+  # ARCH_OPTS_SINGLE="--enable-vsx"                        # VSX SP disabled as results in test fails. See https://github.com/FFTW/fftw3/issues/59
+  ARCH_OPTS_SINGLE="--enable-silent-rules"                 # enable-silent rules to avoid Travis CI log overflow
+  ARCH_OPTS_DOUBLE="--enable-vsx --enable-silent-rules"    # enable-silent rules to avoid Travis CI log overflow
+  # ARCH_OPTS_LONG_DOUBLE="--enable-long-double"           # Disable long double for now to reduce build times and avoid Travis time out
   ARCH_OPTS_LONG_DOUBLE=""
+fi
+
+if [[ "$target_platform" == "linux-aarch64" ]]; then
+  # ARCH_OPTS_SINGLE="--enable-neon"                       # Neon disabled for now
+  ARCH_OPTS_SINGLE=""
+  #ARCH_OPTS_DOUBLE="--enable-neon"                        # Neon disabled for now
+  ARCH_OPTS_DOUBLE=""
+  ARCH_OPTS_LONG_DOUBLE="--enable-long-double"
 fi
 
 build_cases=(
