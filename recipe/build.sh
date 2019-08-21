@@ -40,7 +40,8 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   # ARCH_OPTS_SINGLE="--enable-vsx"                        # VSX SP disabled as results in test fails. See https://github.com/FFTW/fftw3/issues/59
   ARCH_OPTS_SINGLE="--enable-silent-rules"                 # enable-silent rules to avoid Travis CI log overflow
   ARCH_OPTS_DOUBLE="--enable-vsx --enable-silent-rules"    # enable-silent rules to avoid Travis CI log overflow
-  ARCH_OPTS_LONG_DOUBLE="--enable-long-double --enable-silent-rules"
+  # ARCH_OPTS_LONG_DOUBLE="--enable-long-double --enable-silent-rules"  # Disable to reduce build times and stay under Travis.org job time limit.
+  ARCH_OPTS_LONG_DOUBLE=""
 fi
 
 if [[ "$target_platform" == "linux-aarch64" ]]; then
