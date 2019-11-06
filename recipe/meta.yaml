@@ -33,8 +33,9 @@ build:
   {% endif %}
   string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
 
-  {% if mpi != 'nompi' %}
   run_exports:
+    - {{ pin_compatible('fftw', max_pin='x') }}
+  {% if mpi != 'nompi' %}
     - fftw * {{ mpi_prefix }}_*
   {% endif %}
 
