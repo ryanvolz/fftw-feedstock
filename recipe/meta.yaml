@@ -128,7 +128,7 @@ test:
 
 about:
   home: http://fftw.org
-  license: GPL-2.0-only
+  license: GPL-2.0-or-later
   license_file: COPYING
   summary: "The fastest Fourier transform in the west."
 
