@@ -3,7 +3,7 @@ About fftw
 
 Home: http://fftw.org
 
-Package license: GPL-2.0-only
+Package license: GPL-2.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/fftw-feedstock/blob/master/LICENSE.txt)
 
