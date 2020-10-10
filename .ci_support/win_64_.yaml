@@ -6,3 +6,5 @@ channel_targets:
 - conda-forge main
 mpi:
 - nompi
+target_platform:
+- win-64
