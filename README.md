@@ -14,13 +14,6 @@ Current build status
 
 
 <table><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://travis-ci.com/conda-forge/fftw-feedstock">
-        <img alt="macOS" src="https://img.shields.io/travis/com/conda-forge/fftw-feedstock/master.svg?label=macOS">
-      </a>
-    </td>
-  </tr><tr>
     <td>Drone</td>
     <td>
       <a href="https://cloud.drone.io/conda-forge/fftw-feedstock">
@@ -322,7 +315,4 @@ Feedstock Maintainers
 * [@jakirkham](https://github.com/jakirkham/)
 * [@jjhelmus](https://github.com/jjhelmus/)
 * [@jschueller](https://github.com/jschueller/)
-
-
-<!-- dummy commit to enable rerendering -->
 
