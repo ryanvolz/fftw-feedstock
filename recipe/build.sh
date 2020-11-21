@@ -2,6 +2,8 @@
 # Get an updated config.sub and config.guess
 cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
+autoreconf -vfi
+
 export CFLAGS="${CFLAGS} -O3 -fomit-frame-pointer -fstrict-aliasing -ffast-math"
 
 CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-threads"

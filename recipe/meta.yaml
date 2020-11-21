@@ -51,6 +51,11 @@ requirements:
     - {{ compiler('fortran') }}  # [not win]
     - llvm-openmp >=4.0.1  # [osx]
     - make
+    - autoconf  # [unix]
+    - automake  # [unix]
+    - gettext  # [unix]
+    - m4  # [unix]
+    - libtool  # [unix]
   host:
     - {{ mpi }}  # [mpi != 'nompi']
     - llvm-openmp >=4.0.1  # [osx]
