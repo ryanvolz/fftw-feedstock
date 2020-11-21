@@ -44,7 +44,7 @@ build:
 
 requirements:
   build:
-    - perl   # [not win]
+    - perl 5.*  # [not win]
     - cmake  # [win]
     - gnuconfig  # [unix]
     - {{ compiler('c') }}
@@ -59,11 +59,7 @@ requirements:
 
 test:
   requires:
-    {% if c_compiler == 'vs2008' %}
-    - python =2.7
-    {% else %}
-    - python =3.6
-    {% endif %}
+    - python
   commands:
     # Verify library contains Fortran symbols
     - |                                                 # [not win]
