@@ -2,8 +2,7 @@
 # Get an updated config.sub and config.guess
 cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
-export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
-export CFLAGS="${CFLAGS} -I${PREFIX}/include -O3 -fomit-frame-pointer -fstrict-aliasing -ffast-math"
+export CFLAGS="${CFLAGS} -O3 -fomit-frame-pointer -fstrict-aliasing -ffast-math"
 
 CONFIGURE="./configure --prefix=$PREFIX --with-pic --enable-threads"
 
@@ -11,13 +10,7 @@ if [[ "$mpi" != "nompi" ]]; then
     CONFIGURE="${CONFIGURE} --enable-mpi"
 fi
 
-if [[ `uname` == Darwin ]] && [[ "$CC" != "clang" ]]
-then
-    CONFIGURE=${CONFIGURE}" --enable-openmp"
-elif [[ `uname` == Linux ]]
-then
-    CONFIGURE=${CONFIGURE}" --enable-openmp"
-fi
+CONFIGURE=${CONFIGURE}" --enable-openmp"
 
 # (Note exported LDFLAGS and CFLAGS vars provided above.)
 BUILD_CMD="make -j${CPU_COUNT}"
@@ -48,7 +41,7 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   TEST_CMD=""
 fi
 
-if [[ "$target_platform" == "linux-aarch64" ]]; then
+if [[ "$target_platform" == "linux-aarch64" || "$target_platform" == "osx-arm64" ]]; then
   # ARCH_OPTS_SINGLE="--enable-neon"                       # Neon disabled for now
   ARCH_OPTS_SINGLE=""
   #ARCH_OPTS_DOUBLE="--enable-neon"                        # Neon disabled for now
