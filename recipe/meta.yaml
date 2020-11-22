@@ -46,16 +46,15 @@ requirements:
   build:
     - perl 5.*  # [not win]
     - cmake  # [win]
-    - gnuconfig  # [unix]
     - {{ compiler('c') }}
     - {{ compiler('fortran') }}  # [not win]
     - llvm-openmp >=4.0.1  # [osx]
-    - make
+    - make      # [unix]
     - autoconf  # [unix]
     - automake  # [unix]
-    - gettext  # [unix]
-    - m4  # [unix]
-    - libtool  # [unix]
+    - gettext   # [unix]
+    - m4        # [unix]
+    - libtool   # [unix]
     - {{ mpi }}  # [build_platform != target_platform and mpi == 'openmpi']
   host:
     - {{ mpi }}  # [mpi != 'nompi']
