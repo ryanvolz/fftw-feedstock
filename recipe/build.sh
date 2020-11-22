@@ -43,7 +43,7 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   TEST_CMD=""
 fi
 
-if [[ "$target_platform" == "linux-aarch64" || "$target_platform" == "osx-arm64" ]]; then
+if [[ "$target_platform" == "linux-aarch64" ]]; then
   # ARCH_OPTS_SINGLE="--enable-neon"                       # Neon disabled for now
   ARCH_OPTS_SINGLE=""
   #ARCH_OPTS_DOUBLE="--enable-neon"                        # Neon disabled for now
@@ -51,6 +51,16 @@ if [[ "$target_platform" == "linux-aarch64" || "$target_platform" == "osx-arm64"
   ARCH_OPTS_LONG_DOUBLE="--enable-long-double"
 
   # Disable Tests since we don't have enough time on Azure
+  TEST_CMD=""
+fi
+
+if [[ "$target_platform" == "osx-arm64" ]]; then
+  ARCH_OPTS_SINGLE="--enable-neon"
+  ARCH_OPTS_DOUBLE="--enable-neon"
+  ARCH_OPTS_LONG_DOUBLE="--enable-long-double"
+fi
+
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
   TEST_CMD=""
 fi
 
