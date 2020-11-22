@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# Get an updated config.sub and config.guess
-cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
-if [[ $build_platform != $target_platform ]] && [[ $mpi == openmpi ]]; then
+if [[ $build_platform != $target_platform ]] && [[ "$mpi" == "openmpi" ]]; then
+    # enable cross compiling with openmpi
     cp -rf $PREFIX/share/openmpi/*.txt $BUILD_PREFIX/share/openmpi/
 fi
 
@@ -43,8 +42,10 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   ARCH_OPTS_DOUBLE="--enable-vsx --enable-silent-rules"
   ARCH_OPTS_LONG_DOUBLE="--enable-silent-rules"
 
-  # Disable Tests since we don't have enough time on Travis CI
-  TEST_CMD=""
+  # Disable Tests since we don't have enough time on Azure
+  if [[ "$CI" == "azure" ]]; then
+    TEST_CMD=""
+  fi
 fi
 
 if [[ "$target_platform" == "linux-aarch64" ]]; then
@@ -54,8 +55,10 @@ if [[ "$target_platform" == "linux-aarch64" ]]; then
   ARCH_OPTS_DOUBLE=""
   ARCH_OPTS_LONG_DOUBLE=""
 
-  # Disable Tests since we don't have enough time on Azure
-  TEST_CMD=""
+  # Disable Tests since we don't have enough time on Drone
+  if [[ "$CI" == "drone" ]]; then
+    TEST_CMD=""
+  fi
 fi
 
 if [[ "$target_platform" == "osx-arm64" ]]; then
