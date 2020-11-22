@@ -2,6 +2,10 @@
 # Get an updated config.sub and config.guess
 cp $BUILD_PREFIX/share/gnuconfig/config.* .
 
+if [[ $build_platform != $target_platform ]] && [[ $mpi == openmpi ]]; then
+    cp -rf $PREFIX/share/openmpi/*.txt $BUILD_PREFIX/share/openmpi/
+fi
+
 autoreconf -vfi
 
 export CFLAGS="${CFLAGS} -O3 -fomit-frame-pointer -fstrict-aliasing -ffast-math"
@@ -57,7 +61,7 @@ fi
 if [[ "$target_platform" == "osx-arm64" ]]; then
   ARCH_OPTS_SINGLE="--enable-neon"
   ARCH_OPTS_DOUBLE="--enable-neon"
-  ARCH_OPTS_LONG_DOUBLE="--enable-long-double"
+  ARCH_OPTS_LONG_DOUBLE=""
 fi
 
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
