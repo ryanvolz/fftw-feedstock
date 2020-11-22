@@ -80,7 +80,7 @@ build_cases=(
 
 if [[ "$DISABLE_LONG_DOUBLE" != 1 ]]; then
     # long double (SSE2 and AVX not supported)
-    build_cases += ("$CONFIGURE --enable-long-double ${ARCH_OPTS_LONG_DOUBLE}")
+    build_cases+=("$CONFIGURE --enable-long-double ${ARCH_OPTS_LONG_DOUBLE}")
 fi
 
 # first build shared objects
