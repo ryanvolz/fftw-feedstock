@@ -11,6 +11,7 @@ cmake -LAH -G"NMake Makefiles"                             ^
   -DWITH_COMBINED_THREADS=ON                               ^
   -DENABLE_SSE2=ON                                         ^
   -DENABLE_AVX=ON                                          ^
+  -DLIBM_LIBRARY=LIBM-NOTFOUND                             ^
   ..
 if errorlevel 1 exit 1
 
@@ -31,6 +32,7 @@ cmake -LAH -G"NMake Makefiles"                             ^
   -DENABLE_SSE2=ON                                         ^
   -DENABLE_AVX=ON                                          ^
   -DENABLE_FLOAT=ON                                        ^
+  -DLIBM_LIBRARY=LIBM-NOTFOUND                             ^
   ..
 if errorlevel 1 exit 1
 
