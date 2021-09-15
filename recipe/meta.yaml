@@ -1,5 +1,5 @@
-{% set version = "3.3.9" %}
-{% set build = 1 %}
+{% set version = "3.3.10" %}
+{% set build = 0 %}
 
 
 # ensure mpi is defined (needed for conda-smithy recipe-lint)
@@ -12,7 +12,7 @@ package:
 source:
   fn: fftw-{{ version }}.tar.gz
   url: http://www.fftw.org/fftw-{{ version }}.tar.gz
-  sha256: bf2c7ce40b04ae811af714deb512510cc2c17b9ab9d6ddcf49fe4487eea7af3d
+  sha256: 56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467
 
 build:
   # prioritize nompi variant via build number
@@ -31,7 +31,7 @@ build:
   {% else %}
   {% set mpi_prefix = "nompi" %}
   {% endif %}
-  string: "{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}"
+  string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}
 
   run_exports:
     - {{ pin_compatible('fftw', max_pin='x') }}
@@ -64,72 +64,29 @@ test:
     - python
   commands:
     # Verify library contains Fortran symbols
-    - |                                                 # [not win]
+    - |
       strings ${PREFIX}/lib/libfftw3.a | grep -q dfftw || exit 1  # [not win]
-
-    # Verify existence of library files
-    - test -f ${PREFIX}/lib/libfftw3f.a || exit 1           # [not win]
-    - test -f ${PREFIX}/lib/libfftw3.a || exit 1            # [not win]
-    - test -f ${PREFIX}/lib/libfftw3l.a || exit 1           # [not win]
-    - test -f ${PREFIX}/lib/libfftw3f_threads.a || exit 1   # [not win]
-    - test -f ${PREFIX}/lib/libfftw3_threads.a || exit 1    # [not win]
-    - test -f ${PREFIX}/lib/libfftw3l_threads.a || exit 1   # [not win]
-    - test -f ${PREFIX}/lib/libfftw3f_omp.a || exit 1       # [not win]
-    - test -f ${PREFIX}/lib/libfftw3_omp.a || exit 1        # [not win]
-    - test -f ${PREFIX}/lib/libfftw3l_omp.a || exit 1       # [not win]
-
-    # Verify headers are installed
-    - test -f ${PREFIX}/include/fftw3.h || exit 1           # [not win]
-    - if not exist %LIBRARY_INC%\\fftw3.h exit 1            # [win]
-
-    # Verify shared libraries are installed
-    {% set fftw_libs = [
-            "libfftw3",
-            "libfftw3_threads",
-            "libfftw3f",
-            "libfftw3f_threads",
-            "libfftw3l",
-            "libfftw3l_threads",
-    ] %}
-    {% set fftw_omp_libs = [
-            "libfftw3_omp",
-            "libfftw3f_omp",
-            "libfftw3l_omp",
-    ] %}
-    {% set fftw_mpi_libs = [
-            "libfftw3_mpi",
-            "libfftw3f_mpi",
-            "libfftw3l_mpi",
-    ] %}
-
-    {% for lib in fftw_libs %}
-    - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"  # [unix]
-    {% endfor %}
-
-    {% for lib in fftw_omp_libs %}
-    - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"  # [unix]
-    {% endfor %}
-
-    {% if mpi != 'nompi' %}
-    {% for lib in fftw_mpi_libs %}
-    # you need to link to the mpi libs to load the dll, so we just test
-    # if it exists
-    - test -f ${PREFIX}/lib/{{ lib }}${SHLIB_EXT} || exit 1  # [unix]
-    {% endfor %}
-    {% endif %}
-
-    {% set fftw_libs = ["fftw3f", "fftw3"] %}
-
-    {% for base in fftw_libs %}
-    - if not exist %LIBRARY_LIB%\\{{ base }}.lib exit 1  # [win]
-    - if not exist %LIBRARY_BIN%\\{{ base }}.dll exit 1  # [win]
-    {% endfor %}
-
+    - test -f ${PREFIX}/lib/libfftw3f.a || exit 1
+    - test -f ${PREFIX}/lib/libfftw3.a || exit 1
+    - test -f ${PREFIX}/lib/libfftw3l.a || exit 1
+    - test -f ${PREFIX}/lib/libfftw3f_threads.a || exit 1
+    - test -f ${PREFIX}/lib/libfftw3_threads.a || exit 1
+    - test -f ${PREFIX}/lib/libfftw3l_threads.a || exit 1
+    - test -f ${PREFIX}/lib/libfftw3f_omp.a || exit 1
+    - test -f ${PREFIX}/lib/libfftw3_omp.a || exit 1
+    - test -f ${PREFIX}/lib/libfftw3l_omp.a || exit 1
+    - test -f ${PREFIX}/include/fftw3.h || exit 1
+    - if not exist %LIBRARY_INC%\\fftw3.h exit 1
+    - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"
+    - python -c "import ctypes; ctypes.cdll[r'${PREFIX}/lib/{{ lib }}${SHLIB_EXT}']"
+    - test -f ${PREFIX}/lib/{{ lib }}${SHLIB_EXT} || exit 1
+    - if not exist %LIBRARY_LIB%\\{{ base }}.lib exit 1
+    - if not exist %LIBRARY_BIN%\\{{ base }}.dll exit 1
 about:
   home: http://fftw.org
   license: GPL-2.0-or-later
   license_file: COPYING
-  summary: "The fastest Fourier transform in the west."
+  summary: The fastest Fourier transform in the west.
 
 extra:
   recipe-maintainers:
