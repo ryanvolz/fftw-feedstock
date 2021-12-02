@@ -61,7 +61,7 @@ requirements:
 
 test:
   requires:
-    - python
+    - python >=3
   commands:
     # Verify library contains Fortran symbols
     - strings ${PREFIX}/lib/libfftw3.a | grep -q dfftw || exit 1  # [not win]
