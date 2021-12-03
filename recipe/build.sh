@@ -43,9 +43,9 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   ARCH_OPTS_LONG_DOUBLE="--enable-silent-rules"
 
   # Disable Tests since we don't have enough time on Azure
-  if [[ "$CI" == "azure" ]]; then
-    TEST_CMD=""
-  fi
+  #   if [[ "$CI" == "azure" ]]; then
+  #     TEST_CMD=""
+  #   fi
 fi
 
 if [[ "$target_platform" == "linux-aarch64" ]]; then
