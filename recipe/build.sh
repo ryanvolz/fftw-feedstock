@@ -67,7 +67,7 @@ if [[ "$target_platform" == "osx-arm64" ]]; then
   DISABLE_LONG_DOUBLE=1
 fi
 
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == 1 && "${CROSSCOMPILING_EMULATOR:-}" != "" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == 1 && "${CROSSCOMPILING_EMULATOR:-}" == "" ]]; then
   TEST_CMD=""
 fi
 
