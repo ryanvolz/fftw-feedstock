@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+echo "\n\n============================================"
+env
+echo "============================================\n\n"
+
+
 if [[ $build_platform != $target_platform ]] && [[ "$mpi" == "openmpi" ]]; then
     # enable cross compiling with openmpi
     cp -rf $PREFIX/share/openmpi/*.txt $BUILD_PREFIX/share/openmpi/
@@ -83,7 +88,9 @@ if [[ "$DISABLE_LONG_DOUBLE" != 1 ]]; then
     build_cases+=("$CONFIGURE --enable-long-double ${ARCH_OPTS_LONG_DOUBLE}")
 fi
 
+echo "\n\n============================================"
 echo "test command: ${TEST_CMD}"
+echo "============================================\n\n"
 
 # first build shared objects
 for config in "${build_cases[@]}"
