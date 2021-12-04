@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-echo "\n\n============================================"
-env
-echo "============================================\n\n"
-
-
 if [[ $build_platform != $target_platform ]] && [[ "$mpi" == "openmpi" ]]; then
     # enable cross compiling with openmpi
     cp -rf $PREFIX/share/openmpi/*.txt $BUILD_PREFIX/share/openmpi/
