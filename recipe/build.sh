@@ -24,8 +24,12 @@ INSTALL_CMD="make install"
 # Test suite
 # tests are performed during building as they are not available in the
 # installed package.
-# Additional tests can be run with "make smallcheck" and "make bigcheck"
-TEST_CMD="eval cd tests && make check-local && cd -"
+# smallcheck runs fewer tests to save ci time - bigcheck will run more
+CHECK_KIND="check-local"
+if [[ "$target_platform" == "linux-ppc64le" ]] || [[ "$target_platform" == "linux-aarch64" ]]; then
+    CHECK_KIND="smallcheck"
+fi
+TEST_CMD="eval cd tests && make ${CHECK_KIND} && cd -"
 
 #
 # We build 3 different versions of fftw:
@@ -42,8 +46,8 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   ARCH_OPTS_DOUBLE="--enable-vsx --enable-silent-rules"
   ARCH_OPTS_LONG_DOUBLE="--enable-silent-rules"
 
-  # Disable Tests since we don't have enough time on Azure
-  if [[ "$CI" == "azure" ]]; then
+  # Disable Tests since we don't have enough time on travis
+  if [[ "$CI" == "travis" ]]; then
     TEST_CMD=""
   fi
 fi
@@ -67,7 +71,7 @@ if [[ "$target_platform" == "osx-arm64" ]]; then
   DISABLE_LONG_DOUBLE=1
 fi
 
-if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == 1 && "${CROSSCOMPILING_EMULATOR:-}" == "" ]]; then
   TEST_CMD=""
 fi
 
@@ -83,6 +87,14 @@ if [[ "$DISABLE_LONG_DOUBLE" != 1 ]]; then
     build_cases+=("$CONFIGURE --enable-long-double ${ARCH_OPTS_LONG_DOUBLE}")
 fi
 
+echo " "
+echo "============================================"
+echo "============================================"
+echo "test command: ${TEST_CMD}"
+echo "============================================"
+echo "============================================"
+echo " "
+
 # first build shared objects
 for config in "${build_cases[@]}"
 do
@@ -92,6 +104,13 @@ do
     ${INSTALL_CMD}
     ${TEST_CMD}
 done
+
+# do one test suite here
+if [[ "$target_platform" == "linux-ppc64le" ]]; then
+    pushd tests 
+    make smallcheck 
+    popd
+fi
 
 # now build static libraries without exposing fftw* symbols in downstream shared objects
 for config in "${build_cases[@]}"
