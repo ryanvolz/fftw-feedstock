@@ -24,9 +24,9 @@ INSTALL_CMD="make install"
 # Test suite
 # tests are performed during building as they are not available in the
 # installed package.
-# Additional tests can be run with "make smallcheck" and "make bigcheck"
+# smallcheck runs fewer tests to save ci time - bigcheck will run more
 CHECK_KIND="check-local"
-if [[ "$target_platform" == "linux-ppc64le" ]]; then
+if [[ "$target_platform" == "linux-ppc64le" ]] || [[ "$target_platform" == "linux-aarch64" ]]; then
     CHECK_KIND="smallcheck"
 fi
 TEST_CMD="eval cd tests && make ${CHECK_KIND} && cd -"
