@@ -87,9 +87,13 @@ if [[ "$DISABLE_LONG_DOUBLE" != 1 ]]; then
     build_cases+=("$CONFIGURE --enable-long-double ${ARCH_OPTS_LONG_DOUBLE}")
 fi
 
-echo "\n\n============================================"
+echo " "
+echo "============================================"
+echo "============================================"
 echo "test command: ${TEST_CMD}"
-echo "============================================\n\n"
+echo "============================================"
+echo "============================================"
+echo " "
 
 # first build shared objects
 for config in "${build_cases[@]}"
