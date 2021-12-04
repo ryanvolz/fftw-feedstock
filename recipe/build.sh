@@ -46,10 +46,10 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   ARCH_OPTS_DOUBLE="--enable-vsx --enable-silent-rules"
   ARCH_OPTS_LONG_DOUBLE="--enable-silent-rules"
 
-  # Disable Tests since we don't have enough time on Azure
-  #   if [[ "$CI" == "azure" ]]; then
-  #     TEST_CMD=""
-  #   fi
+  # Disable Tests since we don't have enough time on travis
+  if [[ "$CI" == "travis" ]]; then
+    TEST_CMD=""
+  fi
 fi
 
 if [[ "$target_platform" == "linux-aarch64" ]]; then
@@ -104,6 +104,13 @@ do
     ${INSTALL_CMD}
     ${TEST_CMD}
 done
+
+# do one test suite here
+if [[ "$target_platform" == "linux-ppc64le" ]]; then
+    pushd tests 
+    make smallcheck 
+    popd
+fi
 
 # now build static libraries without exposing fftw* symbols in downstream shared objects
 for config in "${build_cases[@]}"
