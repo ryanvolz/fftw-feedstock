@@ -30,7 +30,11 @@ INSTALL_CMD="make install"
 # tests are performed during building as they are not available in the
 # installed package.
 # Additional tests can be run with "make smallcheck" and "make bigcheck"
-TEST_CMD="eval cd tests && make check-local && cd -"
+CHECK_KIND="check-local"
+if [[ "$target_platform" == "linux-ppc64le" ]]; then
+    CHECK_KIND="smallcheck"
+fi
+TEST_CMD="eval cd tests && make ${CHECK_KIND} && cd -"
 
 #
 # We build 3 different versions of fftw:
