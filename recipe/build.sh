@@ -102,6 +102,7 @@ do
     $config --enable-shared --disable-static
     ${BUILD_CMD}
     ${INSTALL_CMD}
+    cp ${RECIPE_DIR}/FFTW3LibraryDepends.cmake $PREFIX/lib/cmake/fftw3/
     ${TEST_CMD}
 done
 
@@ -119,5 +120,6 @@ do
     $config --disable-shared --enable-static CFLAGS="${CFLAGS} -fvisibility=hidden"
     ${BUILD_CMD}
     ${INSTALL_CMD}
+    cp ${RECIPE_DIR}/FFTW3LibraryDepends.cmake $PREFIX/lib/cmake/fftw3
     ${TEST_CMD}
 done
