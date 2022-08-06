@@ -42,8 +42,9 @@ build:
 requirements:
   build:
     - perl 5.*  # [not win]
-    - cmake  # [win]
+    - cmake
     - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}  # [not win]
     - llvm-openmp  # [osx]
     - make      # [unix]
@@ -62,6 +63,11 @@ requirements:
 test:
   requires:
     - python >=3
+    - cmake                   # [not win]
+    - make                    # [not win]
+    - {{ compiler('c') }}     # [not win]
+    - {{ compiler('cxx') }}   # [not win]
+
   commands:
     # Verify library contains Fortran symbols
     - strings ${PREFIX}/lib/libfftw3.a | grep -q dfftw || exit 1  # [not win]
@@ -123,6 +129,9 @@ test:
     - if not exist %LIBRARY_LIB%\\{{ base }}.lib exit 1  # [win]
     - if not exist %LIBRARY_BIN%\\{{ base }}.dll exit 1  # [win]
     {% endfor %}
+
+    # verify cmake builds
+    - bash ${RECIPE_DIR}/test_cmake.sh    # [not win]
 about:
   home: http://fftw.org
   license: GPL-2.0-or-later
@@ -135,4 +144,4 @@ extra:
     - jakirkham
     - grlee77
     - jschueller
-    - egpbos
+    - eg:wq!

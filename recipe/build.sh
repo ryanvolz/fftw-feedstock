@@ -95,6 +95,12 @@ echo "============================================"
 echo "============================================"
 echo " "
 
+# do a cmake build first to generate cmake files
+mkdir build
+cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$PWD/installed
+cmake --build build
+cmake --install build
+
 # first build shared objects
 for config in "${build_cases[@]}"
 do
@@ -102,9 +108,9 @@ do
     $config --enable-shared --disable-static
     ${BUILD_CMD}
     ${INSTALL_CMD}
-    cp ${RECIPE_DIR}/FFTW3LibraryDepends.cmake $PREFIX/lib/cmake/fftw3/
     ${TEST_CMD}
 done
+cp $(find installed -name FFTW3LibraryDepends.cmake) ${PREFIX}/lib/cmake/fftw3/
 
 # do one test suite here
 if [[ "$target_platform" == "linux-ppc64le" ]]; then
@@ -120,6 +126,5 @@ do
     $config --disable-shared --enable-static CFLAGS="${CFLAGS} -fvisibility=hidden"
     ${BUILD_CMD}
     ${INSTALL_CMD}
-    cp ${RECIPE_DIR}/FFTW3LibraryDepends.cmake $PREFIX/lib/cmake/fftw3
     ${TEST_CMD}
 done
