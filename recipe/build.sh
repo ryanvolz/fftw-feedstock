@@ -95,6 +95,12 @@ echo "============================================"
 echo "============================================"
 echo " "
 
+# do a cmake build first to generate cmake files
+mkdir build
+cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$PWD/installed
+cmake --build build
+cmake --install build
+
 # first build shared objects
 for config in "${build_cases[@]}"
 do
@@ -104,6 +110,7 @@ do
     ${INSTALL_CMD}
     ${TEST_CMD}
 done
+cp $(find installed -name FFTW3LibraryDepends.cmake) ${PREFIX}/lib/cmake/fftw3/
 
 # do one test suite here
 if [[ "$target_platform" == "linux-ppc64le" ]]; then
