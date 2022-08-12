@@ -95,36 +95,37 @@ echo "============================================"
 echo "============================================"
 echo " "
 
-# do a cmake build first to generate cmake files
-mkdir build
-cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$PWD/installed
-cmake --build build
-cmake --install build
+if [[ "$PKG_NAME" == *static ]]; then
+    # Shared libraries have been built in the fftw package.
+    # now build static libraries without exposing fftw* symbols in downstream shared objects
+    for config in "${build_cases[@]}"
+    do
+        :
+        $config --disable-shared --enable-static CFLAGS="${CFLAGS} -fvisibility=hidden"
+        ${BUILD_CMD}
+        ${INSTALL_CMD}
+        ${TEST_CMD}
+    done
+else
+    # do a cmake build first to generate cmake files
+    mkdir build
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX=$PWD/installed
+    cmake --build build
+    cmake --install build
+    for config in "${build_cases[@]}"
+    do
+        :
+        $config --enable-shared --disable-static
+        ${BUILD_CMD}
+        ${INSTALL_CMD}
+        ${TEST_CMD}
+    done
+    cp $(find installed -name FFTW3LibraryDepends.cmake) ${PREFIX}/lib/cmake/fftw3/
 
-# first build shared objects
-for config in "${build_cases[@]}"
-do
-    :
-    $config --enable-shared --disable-static
-    ${BUILD_CMD}
-    ${INSTALL_CMD}
-    ${TEST_CMD}
-done
-cp $(find installed -name FFTW3LibraryDepends.cmake) ${PREFIX}/lib/cmake/fftw3/
-
-# do one test suite here
-if [[ "$target_platform" == "linux-ppc64le" ]]; then
-    pushd tests 
-    make smallcheck 
-    popd
+    # do one test suite here
+    if [[ "$target_platform" == "linux-ppc64le" ]]; then
+        pushd tests
+        make smallcheck
+        popd
+    fi
 fi
-
-# now build static libraries without exposing fftw* symbols in downstream shared objects
-for config in "${build_cases[@]}"
-do
-    :
-    $config --disable-shared --enable-static CFLAGS="${CFLAGS} -fvisibility=hidden"
-    ${BUILD_CMD}
-    ${INSTALL_CMD}
-    ${TEST_CMD}
-done
