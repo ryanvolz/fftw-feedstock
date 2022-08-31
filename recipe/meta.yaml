@@ -181,7 +181,7 @@ outputs:
         # Verify library contains Fortran symbols
         - strings ${PREFIX}/lib/libfftw3.a | grep -q dfftw      # [not win]
 
-        # Verify existence of library files
+        # Verify existence of static library files
         - test -f ${PREFIX}/lib/libfftw3f.a                     # [not win]
         - test -f ${PREFIX}/lib/libfftw3.a                      # [not win]
         - test -f ${PREFIX}/lib/libfftw3l.a                     # [not win]
