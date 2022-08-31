@@ -77,7 +77,7 @@ outputs:
         - {{ compiler('cxx') }}   # [not win]
 
       commands:
-        # Verify the non existence of library files
+        # Verify that static library files aren't present yet
         - test ! -f ${PREFIX}/lib/libfftw3f.a                     # [not win]
         - test ! -f ${PREFIX}/lib/libfftw3.a                      # [not win]
         - test ! -f ${PREFIX}/lib/libfftw3l.a                     # [not win]
