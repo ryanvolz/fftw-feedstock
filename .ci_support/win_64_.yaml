@@ -3,7 +3,7 @@ c_compiler:
 channel_sources:
 - conda-forge
 channel_targets:
-- conda-forge main
+- ryanvolz sse2_enabled
 cxx_compiler:
 - vs2019
 mpi:
